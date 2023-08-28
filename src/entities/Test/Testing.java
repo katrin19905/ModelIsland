@@ -1,6 +1,6 @@
 package entities.Test;
 
-import entities.Application.Application;
+import Application.Application;
 import entities.AbstractEntities.Organism;
 
 import java.lang.reflect.InvocationTargetException;

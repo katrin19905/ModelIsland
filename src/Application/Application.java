@@ -1,4 +1,4 @@
-package entities.Application;
+package Application;
 
 import constants.AnimalsListEmodji;
 import constants.PlantsListEmodji;
