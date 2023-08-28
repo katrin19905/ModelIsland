@@ -1,9 +1,7 @@
-package entities;
+package entities.AbstractEntities;
 
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Objects;
-import java.util.TreeMap;
 
 public abstract class Organism  {
     private double weight;
@@ -46,6 +44,8 @@ public abstract class Organism  {
         return food;
     }
     abstract public int getCountInIsland();
+
+
 
 
 }

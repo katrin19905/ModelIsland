@@ -1,13 +1,13 @@
 package entities.Plants;
 
 import constants.Parameters;
-import entities.Organism;
+import entities.AbstractEntities.Organism;
 
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static entities.Plant.PLANT;
+import static entities.AbstractEntities.Plant.PLANT;
 
 public class Tree extends Organism { //дерево
     private double weight = Parameters.WEIGHT_PLANT;

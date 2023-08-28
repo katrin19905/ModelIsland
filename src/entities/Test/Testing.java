@@ -1,11 +1,13 @@
-import entities.Location.Location;
-import entities.Organism;
+package entities.Test;
+
+import entities.Application.Application;
+import entities.AbstractEntities.Organism;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class Application {
+public class Testing {
 
     private static CopyOnWriteArrayList<CopyOnWriteArrayList<ConcurrentHashMap<Organism, Integer>>> list = new CopyOnWriteArrayList<>();
 
@@ -13,11 +15,11 @@ public class Application {
             InvocationTargetException, NoSuchMethodException {
         //Location location = new Location();
         System.out.println("before generate and fulling locations:");
-        Location.printInformationOfIsland();
-        CopyOnWriteArrayList<CopyOnWriteArrayList<ConcurrentHashMap<Organism, Integer>>> newList = Location.generateLocation(20, 20);
+        Application.printInformationOfIsland();
+        CopyOnWriteArrayList<CopyOnWriteArrayList<ConcurrentHashMap<Organism, Integer>>> newList = Application.generateLocation(20, 20);
 
         System.out.println("generate is success");
-        Location.fullLocation(newList);
+        Application.fullLocation(newList);
         System.out.println("full location");
         System.out.println("*".repeat(30));
         System.out.println("Array List: ");
@@ -46,7 +48,7 @@ public class Application {
             for (int j = 0; j < newList.get(0).size(); j++) {
                 ConcurrentHashMap<Organism, Integer> stringIntegerConcurrentHashMap = newList.get(i).get(j);
                 try {
-                    Location.movingAnimals(stringIntegerConcurrentHashMap, i, j);
+                    Application.movingAnimals(stringIntegerConcurrentHashMap, i, j);
                 } catch (NoSuchFieldException | IllegalAccessException e) {
                     e.printStackTrace();
                 }
@@ -56,18 +58,18 @@ public class Application {
         }
         System.out.println("end move");
         newList.forEach(System.out::println);
-        Location.printInformationOfIsland();
+        Application.printInformationOfIsland();
 
         for (int i = 0; i < newList.size(); i++) {
             for (int j = 0; j < newList.get(0).size(); j++) {
                 ConcurrentHashMap<Organism, Integer> stringIntegerConcurrentHashMap = newList.get(i).get(j);
 
-                Location.entitiesEating(stringIntegerConcurrentHashMap);
+                Application.entitiesEating(stringIntegerConcurrentHashMap);
 
             }
         }
         System.out.println("end eat");
         newList.forEach(System.out::println);
-        Location.printInformationOfIsland();
+        Application.printInformationOfIsland();
     }
 }

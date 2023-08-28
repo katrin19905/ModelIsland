@@ -1,18 +1,22 @@
 package entities.Predators;
 
 import constants.Parameters;
-import entities.AbstractPredator;
+import entities.AbstractEntities.AbstractPredator;
 import entities.Herbivores.*;
-import entities.Organism;
+import entities.AbstractEntities.Organism;
 
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Objects;
-import java.util.TreeMap;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Eagle extends AbstractPredator {
+    private int valueOfBreed = 2;
+
+    @Override
+    public int getValueOfBreed() {
+        return valueOfBreed;
+    }
     private double weight = Parameters.WEIGHT_EAGLE;
     @Override
     public double getWeight() {

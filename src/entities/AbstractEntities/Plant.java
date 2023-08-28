@@ -1,4 +1,4 @@
-package entities;
+package entities.AbstractEntities;
 
 import constants.Parameters;
 

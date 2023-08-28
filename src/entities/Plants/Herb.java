@@ -1,8 +1,8 @@
 package entities.Plants;
 
 import constants.Parameters;
-import entities.Organism;
-import entities.Plant;
+import entities.AbstractEntities.Organism;
+import entities.AbstractEntities.Plant;
 
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;

@@ -1,19 +1,23 @@
 package entities.Herbivores;
 
 import constants.Parameters;
-import entities.AbstractHerbivore;
-import entities.Organism;
+import entities.AbstractEntities.AbstractHerbivore;
+import entities.AbstractEntities.Organism;
 import entities.Plants.Herb;
 import entities.Plants.Shrub;
 
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Objects;
-import java.util.TreeMap;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Sheep extends AbstractHerbivore {
+    private int valueOfBreed = 2;
+
+    @Override
+    public int getValueOfBreed() {
+        return valueOfBreed;
+    }
     private double weight = Parameters.WEIGHT_SHEEP;
 
     @Override

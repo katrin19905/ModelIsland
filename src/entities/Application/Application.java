@@ -1,10 +1,11 @@
-package entities.Location;
+package entities.Application;
 
 import constants.AnimalsListEmodji;
 import constants.PlantsListEmodji;
+import entities.AbstractEntities.Animal;
 import entities.Herbivores.*;
-import entities.Organism;
-import entities.Plant;
+import entities.AbstractEntities.Organism;
+import entities.AbstractEntities.Plant;
 import entities.Plants.Herb;
 import entities.Plants.Shrub;
 import entities.Plants.Tree;
@@ -17,7 +18,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 
-public class Location implements Runnable {
+public class Application implements Runnable {
    /* private static volatile ArrayList<Class<? extends Animal>> classesOfAnimals = new ArrayList<>() {{
         add(Bear.class);
         add(Boa.class);
@@ -38,6 +39,24 @@ public class Location implements Runnable {
     */
 
     private static ArrayList<Organism> listOfAnimalsOnly = new ArrayList<>() {{
+        add(new Boar());
+        add(new Buffalo());
+        add(new Caterpillar());
+        add(new Deer());
+        add(new Duck());
+        add(new Goat());
+        add(new Horse());
+        add(new Mouse());
+        add(new Rabbit());
+        add(new Sheep());
+        add(new Bear());
+        add(new Boa());
+        add(new Eagle());
+        add(new Fox());
+        add(new Wolf());
+    }};
+
+    private static ArrayList<Animal> animals = new ArrayList<>() {{
         add(new Boar());
         add(new Buffalo());
         add(new Caterpillar());
@@ -81,6 +100,7 @@ public class Location implements Runnable {
     private static AtomicInteger atomicIntegerOfEatenAnimals = new AtomicInteger(0);
     private static AtomicInteger atomicIntegerOfEatenPlants = new AtomicInteger(0);
     private static AtomicInteger atomicIntegerOfDeadAnimals = new AtomicInteger(0);
+    private static AtomicInteger atomicIntegerOfBornAnimals = new AtomicInteger(0);
 
     public static void main(String[] args) throws NoSuchMethodException, InvocationTargetException,
             IllegalAccessException, InterruptedException {
@@ -115,7 +135,7 @@ public class Location implements Runnable {
         }
 
         ScheduledThreadPoolExecutor executorService = new ScheduledThreadPoolExecutor(4);
-        executorService.scheduleAtFixedRate(new Location(), 500, 500,
+        executorService.scheduleAtFixedRate(new Application(), 500, 500,
                 TimeUnit.MILLISECONDS);
         try {
             Thread.sleep(10000);
@@ -150,6 +170,7 @@ public class Location implements Runnable {
         System.out.println("Съедено животных = " + atomicIntegerOfEatenAnimals);
         System.out.println("Съедено растений = " + atomicIntegerOfEatenPlants);
         System.out.println("Умерло животных = " + atomicIntegerOfDeadAnimals);
+        System.out.println("Родилось животных = " + atomicIntegerOfBornAnimals);
     }
 
 
@@ -252,8 +273,38 @@ public class Location implements Runnable {
             }
             System.out.println("Животные покушали");
             list.forEach(System.out::println);
+            for (int i = 0; i < list.size(); i++) {
+                for (int j = 0; j < list.get(0).size(); j++) {
+                    ConcurrentHashMap<Organism, Integer> stringIntegerConcurrentHashMap = list.get(i).get(j);
+
+                    reproductionAnimals(stringIntegerConcurrentHashMap);
+                }
+            }
+
+            System.out.println("Животные размножились");
+            list.forEach(System.out::println);
             System.out.println("Статистика по завершению работы потока:");
             printInformationOfIsland();
+        }
+    }
+
+    private void reproductionAnimals(ConcurrentHashMap<Organism, Integer> stringIntegerConcurrentHashMap) {
+        for (Animal animal : animals) {
+            Integer countAnimalInLocation = stringIntegerConcurrentHashMap.get(animal);
+            int countOfFemale = 0;
+            if (countAnimalInLocation > 1) {
+                countOfFemale = countAnimalInLocation / 2;
+            }
+            if (countOfFemale != 0) {
+                int countOfReproduction = countOfFemale * animal.getValueOfBreed();
+                if (countOfReproduction != 0) {
+                    if (countOfReproduction+countAnimalInLocation > animal.getMaxCountInLocation()) {
+                        countOfReproduction = animal.getMaxCountInLocation() - countAnimalInLocation;
+                    }
+                    stringIntegerConcurrentHashMap.replace(animal, countAnimalInLocation, countAnimalInLocation + countOfReproduction);
+                    atomicIntegerOfBornAnimals.addAndGet(countOfReproduction);
+                }
+            }
         }
     }
 
